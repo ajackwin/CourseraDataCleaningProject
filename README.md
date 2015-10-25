@@ -1,1 +1,4 @@
 # CourseraDataCleaningProject
+The script is done in a non-logical way in the sense that it does not follow the steps in order. I found it easier to make changes to each text file seperately before binding the data. I made all the changes to the "test" sets, then made all the same changes to the "train" sets and then used rbind to merge both datasets at the end of my script. 
+
+For example, I first wanted to change the values to labels from the y_test file. Then I added new column names to the X_test file using the features file.  Since I was already in the X_test file, I selected columns that only included "mean" and "std". After that I knew I almost had a completed dataset, so I changed all the variable names (step 4) so that they made more sense. And then I did all of those steps to the train files and finally merged the train and test data sets using r_bind. 
