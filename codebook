@@ -1,0 +1,26 @@
+test_activity=y_test.txt set 
+
+
+features = features.txt set
+
+listFeats a column of the "features.txt" that will be included in col.names in the x_set
+
+test_set2= x_test.txt" with col.names=listFeats
+test_set3= x_test that selects mean
+test_set4= x_test that selects std
+test_set5=cbind of test_set3 and test_set4
+
+test_studentID= subject_test.txt set
+
+test_bind= cbind of test_studentID,test_activity and test_set5
+
+All of the same variables are repeated using the train data with "train_" infront of variable.
+
+Changing all the column names:
+colnames<-colnames(train_bind)<-c("studentID","activity","tBA.meanX","tBA.meanY","tBA.meanZ","tGA.meanX","tGA.meanY","tGA.meanZ","tBAJerk.meanX","tBAJerk.meanY","tBAJerk.meanZ","tBG.meanX","tBG.meanY","tBG.meanZ","tBGJerk.meanX","tBGJerk.meanY","tBGJerk.meanZ","tBAMag.mean","tGAMag.mean","tBAJerkMag.mean","tBGMag.mean","tBGJerkMag.mean","fBA.meanX","tBA.meanY","fBA.meanZ","fBA.meanFreqX","fBA.meanFreqY","fBA.meanFreqZ","fBAJerk.meanX","fBAJerk.meanY","fBAJerk.meanZ","fBAJerk.meanFreqX","fBAJerk.meanFreqY","fBAJerk.meanFreqZ","fBG.meanX","fBG.meanY","fBG.meanZ","fBG.meanFreqX","fBG.meanFreqY","fBG.meanFreqZ","fBAMag.mean","fBAMag.meanFreq","fBodyBAJerkMag.mean","fBodyBAJerkMag.meanFreq","fBodyBGMag.mean","fBodyBGMag.meanFreq","fBodyBGJerkMag.mean","fBodyBGJerkMag.meanFreq","angle.tBAMean.gravity","angle.tBAJerkMeangravityMean","angle.tBGMean.gravityMean","angle.tBGJerkMean.gravityMean","angle.X.gravityMean","angle.Y.gravityMean","angle.Z.gravityMean","tBA.stdX","tBA.stdY","tBA.stdZ","tGA.stdX","tGA.stdY","tGA.stdZ","tBAJerk.stdX","tBAJerk.stdY","tBAJerk.stdZ","tBG.stdX","tBGstdY","tBG.stdZ","tBGJerk.stdX","tBGJerk.stdY","tBGJerk.stdZ","tBAMag.std","tGAMag.std","tBAJerkMag.std","tBGMag.std","tBGJerkMag.std","fBA.stdX","fBA.stdY","fBA.stdZ","fBAJerk.stdX","fBAJerk.stdY","fBAJerk.stdZ","fBG.stdX","fBG.stdY","fBG.stdZ","fBAMag.std","fBodyBAJerkMag.std","fBodyBGMag.std","fBodyBGJerkMag.std")
+
+
+final=rbind of test_bind and train_bind
+
+avg_table = tidy dataset
+
