@@ -1,1 +1,91 @@
-I want to attach my r script here
+I can't get my git to work from my laptop to upload my r script and I am unfortunately running out of time. This is my r.script and I hope you can understand my difficutly. 
+I looked for hours to see how to attach a file, but I can't seem to find anything. Thanks!
+
+
+setwd ("C:/Users/ajackwin/Downloads/UCI HAR Dataset")
+
+#so after running all the code i see that i did the project out of order, but in an order
+#that made sense in my head and then it ran, so I don't think recreating would do any good
+
+#step 3
+#first read in activity and change the values  
+test_activity=read.table("C:/Users/Andrew/Desktop/Downloads/UCI HAR Dataset/test/y_test.txt")
+names(test_activity)[names(test_activity)=="V1"]<-"activity"
+
+test_activity$activity[test_activity$activity==1] <- "WALKING" 
+test_activity$activity[test_activity$activity==2] <- "WALKING_UPSTAIRS" 
+test_activity$activity[test_activity$activity==3] <-"WALKING_DOWNSTAIRS" 
+test_activity$activity[test_activity$activity==4] <- "SITTING" 
+test_activity$activity[test_activity$activity==5] <- "STANDING" 
+test_activity$activity[test_activity$activity==6] <- "LAYING"
+
+#we can get the labels for the test_set by transforming the listFeats vector
+features = read.table("C:/Users/Andrew/Desktop/Downloads/UCI HAR Dataset/features.txt")
+transFeat<-t(features)
+listFeats<-transFeat[2,]
+
+#step 2
+
+#listFeats is our column names for "set" data
+test_set2= read.table("C:/Users/Andrew/Desktop/Downloads/UCI HAR Dataset/test/x_test.txt", col.names=listFeats)
+#'select' will pick up means and std. I can do this independently and then cbind the datasets
+install.packages("dplyr")
+library(dplyr)
+test_set3= select(test_set2, contains("mean"))
+test_set4= select(test_set2, contains("std"))
+test_set5=cbind(test_set3, test_set4)
+
+test_studentID= read.table("C:/Users/Andrew/Desktop/Downloads/UCI HAR Dataset/test/subject_test.txt")
+names(test_studentID)[names(test_studentID)=="V1"]<-"studentID"
+test_bind= cbind(test_studentID,test_activity, test_set5)
+
+#step 4 is at the end of the code
+
+#do exact same with train set
+
+train_activity=read.table("C:/Users/Andrew/Desktop/Downloads/UCI HAR Dataset/train/y_train.txt")
+names(train_activity)[names(train_activity)=="V1"]<-"activity"
+
+train_activity$activity[train_activity$activity==1] <- "WALKING" 
+train_activity$activity[train_activity$activity==2] <- "WALKING_UPSTAIRS" 
+train_activity$activity[train_activity$activity==3] <-"WALKING_DOWNSTAIRS" 
+train_activity$activity[train_activity$activity==4] <- "SITTING" 
+train_activity$activity[train_activity$activity==5] <- "STANDING" 
+train_activity$activity[train_activity$activity==6] <- "LAYING"
+
+
+features = read.table("C:/Users/Andrew/Desktop/Downloads/UCI HAR Dataset/features.txt")
+
+#step2
+train_set2= read.table("C:/Users/Andrew/Desktop/Downloads/UCI HAR Dataset/train/x_train.txt", col.names=listFeats)
+install.packages("dplyr")
+library(dplyr)
+train_set3= select(train_set2, contains("mean"))
+train_set4= select(train_set2, contains("std"))
+train_set5=cbind(train_set3, train_set4)
+
+train_studentID= read.table("C:/Users/Andrew/Desktop/Downloads/UCI HAR Dataset/train/subject_train.txt")
+names(train_studentID)[names(train_studentID)=="V1"]<-"studentID"
+
+train_bind= cbind(train_studentID, train_activity, train_set5)
+
+#step 4
+#changing all the column names
+colnames<-colnames(train_bind)<-c("studentID","activity","tBA.meanX","tBA.meanY","tBA.meanZ","tGA.meanX","tGA.meanY","tGA.meanZ","tBAJerk.meanX","tBAJerk.meanY","tBAJerk.meanZ","tBG.meanX","tBG.meanY","tBG.meanZ","tBGJerk.meanX","tBGJerk.meanY","tBGJerk.meanZ","tBAMag.mean","tGAMag.mean","tBAJerkMag.mean","tBGMag.mean","tBGJerkMag.mean","fBA.meanX","tBA.meanY","fBA.meanZ","fBA.meanFreqX","fBA.meanFreqY","fBA.meanFreqZ","fBAJerk.meanX","fBAJerk.meanY","fBAJerk.meanZ","fBAJerk.meanFreqX","fBAJerk.meanFreqY","fBAJerk.meanFreqZ","fBG.meanX","fBG.meanY","fBG.meanZ","fBG.meanFreqX","fBG.meanFreqY","fBG.meanFreqZ","fBAMag.mean","fBAMag.meanFreq","fBodyBAJerkMag.mean","fBodyBAJerkMag.meanFreq","fBodyBGMag.mean","fBodyBGMag.meanFreq","fBodyBGJerkMag.mean","fBodyBGJerkMag.meanFreq","angle.tBAMean.gravity","angle.tBAJerkMeangravityMean","angle.tBGMean.gravityMean","angle.tBGJerkMean.gravityMean","angle.X.gravityMean","angle.Y.gravityMean","angle.Z.gravityMean","tBA.stdX","tBA.stdY","tBA.stdZ","tGA.stdX","tGA.stdY","tGA.stdZ","tBAJerk.stdX","tBAJerk.stdY","tBAJerk.stdZ","tBG.stdX","tBGstdY","tBG.stdZ","tBGJerk.stdX","tBGJerk.stdY","tBGJerk.stdZ","tBAMag.std","tGAMag.std","tBAJerkMag.std","tBGMag.std","tBGJerkMag.std","fBA.stdX","fBA.stdY","fBA.stdZ","fBAJerk.stdX","fBAJerk.stdY","fBAJerk.stdZ","fBG.stdX","fBG.stdY","fBG.stdZ","fBAMag.std","fBodyBAJerkMag.std","fBodyBGMag.std","fBodyBGJerkMag.std")
+names(train_bind)
+colnames(test_bind)<-c("studentID","activity","tBA.meanX","tBA.meanY","tBA.meanZ","tGA.meanX","tGA.meanY","tGA.meanZ","tBAJerk.meanX","tBAJerk.meanY","tBAJerk.meanZ","tBG.meanX","tBG.meanY","tBG.meanZ","tBGJerk.meanX","tBGJerk.meanY","tBGJerk.meanZ","tBAMag.mean","tGAMag.mean","tBAJerkMag.mean","tBGMag.mean","tBGJerkMag.mean","fBA.meanX","tBA.meanY","fBA.meanZ","fBA.meanFreqX","fBA.meanFreqY","fBA.meanFreqZ","fBAJerk.meanX","fBAJerk.meanY","fBAJerk.meanZ","fBAJerk.meanFreqX","fBAJerk.meanFreqY","fBAJerk.meanFreqZ","fBG.meanX","fBG.meanY","fBG.meanZ","fBG.meanFreqX","fBG.meanFreqY","fBG.meanFreqZ","fBAMag.mean","fBAMag.meanFreq","fBodyBAJerkMag.mean","fBodyBAJerkMag.meanFreq","fBodyBGMag.mean","fBodyBGMag.meanFreq","fBodyBGJerkMag.mean","fBodyBGJerkMag.meanFreq","angle.tBAMean.gravity","angle.tBAJerkMeangravityMean","angle.tBGMean.gravityMean","angle.tBGJerkMean.gravityMean","angle.X.gravityMean","angle.Y.gravityMean","angle.Z.gravityMean","tBA.stdX","tBA.stdY","tBA.stdZ","tGA.stdX","tGA.stdY","tGA.stdZ","tBAJerk.stdX","tBAJerk.stdY","tBAJerk.stdZ","tBG.stdX","tBGstdY","tBG.stdZ","tBGJerk.stdX","tBGJerk.stdY","tBGJerk.stdZ","tBAMag.std","tGAMag.std","tBAJerkMag.std","tBGMag.std","tBGJerkMag.std","fBA.stdX","fBA.stdY","fBA.stdZ","fBAJerk.stdX","fBAJerk.stdY","fBAJerk.stdZ","fBG.stdX","fBG.stdY","fBG.stdZ","fBAMag.std","fBodyBAJerkMag.std","fBodyBGMag.std","fBodyBGJerkMag.std")
+
+#step 1
+#final, cleaned dataset
+final=rbind.data.frame(test_bind, train_bind)
+names(final)
+
+#part 5
+avg_table <- final %>% group_by(studentID,activity) %>% summarise_each(funs(mean))
+
+write.table(avg_table, "avg_table.txt", row.names = FALSE)
+?write.table
+summary(avg_table)
+
+dir()
+
